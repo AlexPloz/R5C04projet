@@ -1,0 +1,55 @@
+AED United Arab Emirates dirham
+AFN	Afghan afghani
+ALL	Albanian lek
+AMD	Armenian dram
+ANG 	Netherlands Antillean guilder
+ARS	Argentine peso
+AUD	Australian dollar
+AWG	Aruban florin
+AZN	Azerbaijan manat
+BAM	Bosnia and Herzegovina convertible mark
+BGN	Bulgarian lev
+BIF	Burundi franc
+BOB	Bolivian boliviano
+BRL	Brazilian real
+CAD	Canadian dollar
+CDF	Congolese franc
+CHF	Swiss franc
+CLP	Chilean peso
+CNY	Chinese Yuan Renminbi
+COP	Colombian peso
+CRC	Costa Rican colon
+CUP	Cuban peso
+DJF	Djiboutian franc
+EUR 	European Euro
+FJD	Fijian dollar
+FKP	Falkland Islands pound
+GBP	Pound sterling
+GHS	Ghanaian cedi
+GIP	Gibraltar pound
+HKD	Hong Kong dollar
+HUF	Hungarian forint
+IDR	Indonesian rupiah
+ILS	Israeli new shekel
+INR	Indian rupee
+IRR	Iranian rial
+JPY	Japanese yen
+LAK	Lao kip
+MYR	Malaysian ringgit
+NA
+NOK	Norwegian krone
+PEN	Peruvian sol
+PLN	Polish zloty
+QAR	Qatari riyal
+SAR	Saudi Arabian riyal
+SLL	Sierra Leonean leone
+THB	Thai baht
+TWD	New Taiwan dollar
+UAH	Ukrainian hryvnia
+UGX	Ugandan shilling
+USD	United States dollar
+UZS	Uzbekistani som
+XPF	CFP franc
+YER	Yemeni rial
+ZAR	South African rand
+ZMW 	Zambian kwacha
