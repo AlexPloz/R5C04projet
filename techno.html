@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Chart du Top tech </title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="./functions.js"></script>
+        <link rel="stylesheet" href="style.css" />
+      </head>
+<body>
+    <div class="menu">
+        <button id="topTech">Technologie</button>
+        <button id="topSalary">Compétence</button>
+        <button id="experience">Experience</button>
+      </div>
+        <label for="continent-select">Choisissez un continent:</label>
+        <select id="continent-select" onchange="updateChartData()">
+          <option value="WE">Europe</option>
+          <option value="NA">Amérique du Nord</option>
+        </select>
+
+        <label for="country-select">Choisissez un pays:</label>
+        <select id="country-select" onchange="updateChartData()"></select>
+        
+        <div>
+          <canvas id="myChart"></canvas>
+        </div>
+        <script src="js/chart.js"></script>
+</body>
+</html>
