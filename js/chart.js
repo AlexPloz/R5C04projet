@@ -50,8 +50,19 @@ function calculateTopOsByDevType(data) {
         }
     });
 
+    // Trier par ordre décroissant avant le retour
+    for (let dev in devtype) {
+        devtype[dev] = Object.entries(devtype[dev])
+            .sort((a, b) => b[1] - a[1]) // Tri décroissant basé sur la fréquence
+            .reduce((sorted, [key, value]) => {
+                sorted[key] = value;
+                return sorted;
+            }, {});
+    }
+
     return devtype;
 }
+
 
 
 function calculateTopComByDevType(data) {
@@ -80,15 +91,26 @@ function calculateTopComByDevType(data) {
         }
     });
 
+    // Trier les outils de communication par ordre décroissant
+    for (let dev in devtype) {
+        devtype[dev] = Object.entries(devtype[dev])
+            .sort((a, b) => b[1] - a[1]) // Tri décroissant basé sur la fréquence
+            .reduce((sorted, [key, value]) => {
+                sorted[key] = value;
+                return sorted;
+            }, {});
+    }
+
     return devtype;
 }
+
 
 
     
 
 let chartInstances = []; // Tableau pour stocker les instances des graphiques
 
-function createPieChart(data, id, top) {
+function createPieChart(data, id, top, title) {
     let ctx = document.getElementById(id).getContext("2d");
 
     // Vérifie si une instance existe pour l'ID donné
@@ -114,7 +136,7 @@ function createPieChart(data, id, top) {
             labels: labels,
             datasets: [
                 {
-                    label: "Technologies les plus utilisées",
+                    label: title,
                     data: values,
                     backgroundColor: backgroundColors,
                     borderColor: "rgba(54, 162, 235, 1)",
@@ -134,7 +156,55 @@ function createPieChart(data, id, top) {
     // Stocke la nouvelle instance dans le tableau
     chartInstances.push({ id: id, instance: newChartInstance });
 }
-;
+
+function createBarChart(data, id, top, title){
+    let ctx = document.getElementById(id).getContext("2d");
+
+    // Vérifie si une instance existe pour l'ID donné
+    let existingChartIndex = chartInstances.findIndex((chart) => chart.id === id);
+    if (existingChartIndex !== -1) {
+        chartInstances[existingChartIndex].instance.destroy(); // Détruit l'instance précédente si elle existe
+        chartInstances.splice(existingChartIndex, 1); // Supprime l'ancienne instance du tableau
+    }
+
+    // Crée le graphique
+    let labels = Object.keys(data).slice(0, top);
+    let values = Object.values(data).slice(0, top);
+    let backgroundColors = labels.map((label) => {
+        let r = Math.floor(Math.random() * 255);
+        let g = Math.floor(Math.random() * 255);
+        let b = Math.floor(Math.random() * 255);
+        return `rgba(${r}, ${g}, ${b}, 0.5)`;
+    });
+
+    let newChartInstance = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: title,
+                    data: values,
+                    backgroundColor: backgroundColors,
+                    borderColor: "rgba(54, 162, 235, 1)",
+                    borderWidth: 1,
+                },
+            ],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+
+    // Stocke la nouvelle instance dans le tableau
+    chartInstances.push({ id: id, instance: newChartInstance });
+}
+
+
 
 
 
@@ -188,7 +258,6 @@ function updateChartData() {
 }
 
 function updateChartDataTech() {
-    var continent = document.getElementById("continent-select").value;
     var country = document.getElementById("country-select").value;
     var devtype = document.getElementById("devtype-select").value;
     var top = document.getElementById("top-select").value;
@@ -201,8 +270,37 @@ function updateChartDataTech() {
     let topComByDevType = calculateTopComByDevType(filteredData);
     let topOsByDevType = calculateTopOsByDevType(filteredData);
 
-    createPieChart(topOsByDevType[devtype], "myPieChartOS", parseInt(top));
-    createPieChart(topComByDevType[devtype], "myPieChartCommunication", parseInt(top));
+   
+    if (parseInt(top) > 5) {
+        createBarChart(topOsByDevType[devtype], "myChartOS", parseInt(top), "Systèmes d'exploitation les plus utilisés");
+        createBarChart(topComByDevType[devtype], "myChartCommunication", parseInt(top),"Outils de communication les plus utilisés");
+    } else {
+        createPieChart(topOsByDevType[devtype], "myChartOS", parseInt(top), "Systèmes d'exploitation les plus utilisés");
+        createPieChart(topComByDevType[devtype], "myChartCommunication", parseInt(top),"Outils de communication les plus utilisés");
+    }
+    
+    
+
+    topcom = document.getElementById("topcom");
+    topos = document.getElementById("topos");
+
+    topcom.innerHTML = "";
+    topos.innerHTML = "";
+    console.log(topComByDevType[devtype])
+
+    for (let i = 0; i < top; i++) {
+        let toolCom = Object.entries(topComByDevType[devtype])[i];
+        let toolOs = Object.entries(topOsByDevType[devtype])[i];
+    
+        if (toolCom && toolOs) {
+            let [toolComName, toolComCount] = toolCom;
+            let [toolOsName, toolOsCount] = toolOs;
+    
+            numb = i + 1;
+            topcom.innerHTML += `<li>[${numb}] ${toolComName} (${toolComCount})</li>`;
+            topos.innerHTML += `<li>[${numb}] ${toolOsName} (${toolOsCount})</li>`;
+        }
+    }
 }
 
 
