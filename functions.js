@@ -29,3 +29,21 @@ function changementdevise(montant, devise) {
     throw new Error("La devise spécifiée n'est pas disponible dans les taux de change.");
   }
 }
+
+function convertToEuro(amount, currency) {
+  if (currency === "NA" || !currency) {
+    return null; // Retourne null pour les devises non valides ou 'NA'
+  }
+
+  let currencyCode = currency.substring(0, 3);
+
+  if (exchangeRatesGlobal && exchangeRatesGlobal.hasOwnProperty(currencyCode)) {
+    return amount * exchangeRatesGlobal[currencyCode];
+  } else {
+    console.error(`Devise non trouvée: ${currencyCode}`);
+    throw new Error("La devise spécifiée n'est pas disponible dans les taux de change.");
+  }
+}
+
+
+
