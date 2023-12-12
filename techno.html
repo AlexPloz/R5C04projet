@@ -11,22 +11,53 @@
       </head>
 <body>
     <div class="menu">
-        <button id="topTech">Technologie</button>
-        <button id="topSalary">Compétence</button>
-        <button id="experience">Experience</button>
-      </div>
-        <label for="continent-select">Choisissez un continent:</label>
-        <select id="continent-select" onchange="updateChartData()">
-          <option value="WE">Europe</option>
-          <option value="NA">Amérique du Nord</option>
-        </select>
-
-        <label for="country-select">Choisissez un pays:</label>
-        <select id="country-select" onchange="updateChartData()"></select>
-        
         <div>
-          <canvas id="myChart"></canvas>
+            <button id="topTech">Technologie</button>
+            <button id="topSalary">Compétence</button>
+            <button id="experience">Experience</button>
         </div>
+        
+        <div class="option">
+            <label for="continent-select">Choisissez un continent:</label>
+            <select id="continent-select" onchange="updateChartDataTech()">
+              <option value="WE">Europe</option>
+              <option value="NA">Amérique du Nord</option>
+            </select>
+    
+            <label for="country-select">Choisissez un pays:</label>
+            <select id="country-select" onchange="updateChartDataTech()"></select>
+    
+            <label for="devtype-select">Choisissez un métier:</label>
+            <select id="devtype-select" onchange="updateChartDataTech()"></select>
+
+            
+            <div>
+                <label for="top-select">Top:</label>
+                <input type="range" id="top-select" min="5" max="10" value="5" oninput="updateChartDataTech()">
+                <span id="sliderValueTop">5</span> <!-- Affichage dynamique de la valeur sélectionnée -->
+            </div>
+        </div>
+    </div>
+
+        
+        <div class="chart-grid">
+            <div class="chart-container">
+                <h3 class="chart-title">Top OS</h3>
+                <div>
+                    <canvas id="myPieChartOS"></canvas>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h3 class="chart-title">Top Outils de communication</h3>
+                <div>
+                    <canvas id="myPieChartCommunication"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        
         <script src="js/chart.js"></script>
+        <script>page="techno"</script>
+
 </body>
 </html>
