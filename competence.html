@@ -11,12 +11,14 @@
 </head>
 <body>
   <div class="menu">
-    <button id="topTech">Technologie</button>
-    <button id="topSalary">Compétence</button>
     <button id="experience">Experience</button>
-  </div>
-  
-  <label for="continent-select">Choisissez un continent:</label>
+    <div>
+      <button id="topTech"><a href="index.html">Technologie</a></button>
+      <button id="topSalary"><a href="competence.html">Compétence</a></button>
+      <button id="experience"><a href="experience.html">Experience</a></button>
+    </div>
+    <div class="option">
+      <label for="continent-select">Choisissez un continent:</label>
   <select id="continent-select">
     <option value="">-- Sélectionnez un continent --</option>
     <option value="WE">Europe</option>
@@ -33,6 +35,11 @@
   <label for="years-slider">Choisissez les années d'expérience :</label>
   <input type="range" id="years-slider" min="0" max="50" value="0" oninput="updateSliderValue(this.value)" style="width: 50%;">
   <span id="years-display">0</span> ans
+    </div>
+
+  </div>
+  
+  
   
 
   <div>

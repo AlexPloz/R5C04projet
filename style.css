@@ -2,6 +2,10 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
 }
+a{
+  text-decoration: none;/*Pour que le lien ne soit plus "souligné"...*/
+  color: white; /*ça reste un exemple*/
+}
 
 .menu {
   background-color: #f2f2f2;
