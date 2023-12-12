@@ -28,5 +28,37 @@ body {
 
 .content {
   padding: 20px;
-  margin-top: 80px; /* Pour éviter que le contenu soit caché sous le menu */
+  margin: 2%; /* Pour éviter que le contenu soit caché sous le menu */
+}
+
+/* Style pour la grille des graphiques */
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Deux colonnes de largeur égale */
+  gap: 2%; /* Espacement entre les colonnes */
+}
+
+/* Style pour chaque conteneur de graphique */
+.chart-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+/* Style pour les titres des graphiques */
+.chart-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Appliquer le style aux deux graphiques */
+#myPieChartOS,
+#myPieChartCommunication {
+  width: 60%;
+  height: auto;
+  display: block;
+}
+
+
+.option{
+  padding : 1%;
 }

@@ -21,7 +21,7 @@ function loadExchangeRates() {
 // Appeler cette fonction au démarrage
 loadExchangeRates();
 
-// Fonction modifiée pour utiliser la variable globale
+// Fonction pour changer vers l'euro
 function changementdevise(montant, devise) {
   if (exchangeRatesGlobal && exchangeRatesGlobal.hasOwnProperty(devise)) {
     return montant * exchangeRatesGlobal[devise];

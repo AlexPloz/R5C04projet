@@ -1,6 +1,7 @@
 
 var currentData = []; // Stocker les données JSON actuelles
 var chartInstance = null; // Instance de Chart.js
+var page = null; // Page actuelle
 
 function getProfessionalExperience(data) {
   let experiences = data.map((item) => item["YearsCodePro"]);
@@ -21,6 +22,122 @@ function calculateIncomeByExperience(data) {
   });
   return incomes;
 }
+
+
+
+function calculateTopOsByDevType(data) {
+    let devtype = {};
+
+    data.forEach((item) => {
+        let os = item["OpSysProfessionaluse"];
+        let dev = item["DevType"];
+        
+        if (os) {
+            let techArray = os.split(";");
+            if (devtype.hasOwnProperty(dev)) {
+                techArray.forEach((tech) => {
+                    if (devtype[dev].hasOwnProperty(tech)) {
+                        devtype[dev][tech] += 1;
+                    } else {
+                        devtype[dev][tech] = 1;
+                    }
+                });
+            } else {
+                devtype[dev] = {};
+                techArray.forEach((tech) => {
+                    devtype[dev][tech] = 1;
+                });
+            }
+        }
+    });
+
+    return devtype;
+}
+
+
+function calculateTopComByDevType(data) {
+    let devtype = {};
+
+    data.forEach((item) => {
+        let outils = item["OfficeStackSyncHaveWorkedWith"];
+        let dev = item["DevType"];
+        
+        if (outils) {
+            let techArray = outils.split(";");
+            if (devtype.hasOwnProperty(dev)) {
+                techArray.forEach((tech) => {
+                    if (devtype[dev].hasOwnProperty(tech)) {
+                        devtype[dev][tech] += 1;
+                    } else {
+                        devtype[dev][tech] = 1;
+                    }
+                });
+            } else {
+                devtype[dev] = {};
+                techArray.forEach((tech) => {
+                    devtype[dev][tech] = 1;
+                });
+            }
+        }
+    });
+
+    return devtype;
+}
+
+
+    
+
+let chartInstances = []; // Tableau pour stocker les instances des graphiques
+
+function createPieChart(data, id, top) {
+    let ctx = document.getElementById(id).getContext("2d");
+
+    // Vérifie si une instance existe pour l'ID donné
+    let existingChartIndex = chartInstances.findIndex((chart) => chart.id === id);
+    if (existingChartIndex !== -1) {
+        chartInstances[existingChartIndex].instance.destroy(); // Détruit l'instance précédente si elle existe
+        chartInstances.splice(existingChartIndex, 1); // Supprime l'ancienne instance du tableau
+    }
+
+    // Crée le graphique
+    let labels = Object.keys(data).slice(0, top);
+    let values = Object.values(data).slice(0, top);
+    let backgroundColors = labels.map((label) => {
+        let r = Math.floor(Math.random() * 255);
+        let g = Math.floor(Math.random() * 255);
+        let b = Math.floor(Math.random() * 255);
+        return `rgba(${r}, ${g}, ${b}, 0.5)`;
+    });
+
+    let newChartInstance = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Technologies les plus utilisées",
+                    data: values,
+                    backgroundColor: backgroundColors,
+                    borderColor: "rgba(54, 162, 235, 1)",
+                    borderWidth: 1,
+                },
+            ],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+
+    // Stocke la nouvelle instance dans le tableau
+    chartInstances.push({ id: id, instance: newChartInstance });
+}
+;
+
+
 
 function createChart(data) {
   let ctx = document.getElementById("myChart").getContext("2d");
@@ -51,15 +168,44 @@ function createChart(data) {
   });
 }
 
+
+
 function updateChartData() {
   var continent = document.getElementById("continent-select").value;
   var country = document.getElementById("country-select").value;
+
+
   let filteredData = country
     ? currentData.filter((item) => item["Country"] === country)
     : currentData;
+
+    
+
   let incomeByExperience = calculateIncomeByExperience(filteredData);
+  
+
   createChart(incomeByExperience);
+  
 }
+
+function updateChartDataTech() {
+    var continent = document.getElementById("continent-select").value;
+    var country = document.getElementById("country-select").value;
+    var devtype = document.getElementById("devtype-select").value;
+    var top = document.getElementById("top-select").value;
+    document.getElementById("sliderValueTop").innerHTML = top;
+    
+    let filteredData = currentData.filter((item) => {
+        return (!country || item["Country"] === country) && (!devtype || item["DevType"] === devtype);
+    });
+
+    let topComByDevType = calculateTopComByDevType(filteredData);
+    let topOsByDevType = calculateTopOsByDevType(filteredData);
+
+    createPieChart(topOsByDevType[devtype], "myPieChartOS", parseInt(top));
+    createPieChart(topComByDevType[devtype], "myPieChartCommunication", parseInt(top));
+}
+
 
 function updateCountrySelect(data) {
   let countrySelect = document.getElementById("country-select");
@@ -69,8 +215,27 @@ function updateCountrySelect(data) {
   countrySelect.innerHTML = countries
     .map((country) => `<option value="${country}">${country}</option>`)
     .join("");
-  updateChartData(); // Mettre à jour le graphique après avoir sélectionné les pays
+
+    console.log(page);
+    if (page == "techno") {
+        updateDevtypeSelect(data);
+    } else{
+        updateChartData();
+    }
+
+
 }
+
+function updateDevtypeSelect(data) {
+    let devtypeSelect = document.getElementById("devtype-select");
+    let devtype = [
+        ...new Set(data.map((item) => item["DevType"])),
+    ].sort();
+    devtypeSelect.innerHTML = devtype
+        .map((devtype) => `<option value="${devtype}">${devtype}</option>`)
+        .join("");
+}
+
 
 function loadChartData(continent) {
   let file =
@@ -83,7 +248,9 @@ function loadChartData(continent) {
     dataType: "json",
   }).done(function (jsonData) {
     currentData = jsonData;
+    
     updateCountrySelect(jsonData); // Mettre à jour les options de sélection du pays
+    
   });
 }
 
