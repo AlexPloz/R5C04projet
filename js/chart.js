@@ -304,16 +304,12 @@ function updateChartDataTech() {
   }
 }
 
-function updateCountrySelect(data, defaultCountry = "France") {
+function updateCountrySelect(data) {
   let countrySelect = document.getElementById("country-select");
   let countries = [...new Set(data.map((item) => item["Country"]))].sort();
-  countrySelect.innerHTML = countries
-    .map(
-      (country) =>
-        `<option value="${country}"${
-          country === defaultCountry ? " selected" : ""
-        }>${country}</option>`
-    )
+  countrySelect.innerHTML += `<option value="">-- Sélectionnez un pays --</option>`;
+  countrySelect.innerHTML += countries
+    .map((country) => `<option value="${country}"$>${country}</option>`)
     .join("");
 
   if (page == "techno") {
@@ -333,7 +329,7 @@ function updateDevtypeSelect(data) {
   updateChartDataTech();
 }
 
-function loadChartData(continent, defaultCountry) {
+function loadChartData(continent) {
   let file = continent === "WE" ? dataWE : dataNA;
   $.ajax({
     type: "GET",
@@ -341,7 +337,7 @@ function loadChartData(continent, defaultCountry) {
     dataType: "json",
   }).done(function (jsonData) {
     currentData = jsonData;
-    updateCountrySelect(jsonData, defaultCountry); // Passer le pays par défaut
+    updateCountrySelect(jsonData); // Passer le pays par défaut
   });
 }
 
