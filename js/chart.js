@@ -334,8 +334,7 @@ function updateDevtypeSelect(data) {
 }
 
 function loadChartData(continent, defaultCountry) {
-  let file =
-    continent === "WE" ? "survey_results_WE.json" : "survey_results_NA.json";
+  let file = continent === "WE" ? dataWE : dataNA;
   $.ajax({
     type: "GET",
     url: file,
