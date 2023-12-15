@@ -6,16 +6,18 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./js/option.js"></script>
     <script src="./functions.js"></script>
     <link rel="stylesheet" href="style.css" />
-    
   </head>
   <body>
     <div class="menu">
       <div>
         <button id="topTech"><a href="index.html">Technologie</a></button>
         <button id="topSalary"><a href="competence.html">Compétence</a></button>
-        <button id="experience"><a href="experience.html">Experience</a></button>
+        <button id="experience">
+          <a href="experience.html">Experience</a>
+        </button>
       </div>
       <div class="option">
         <label for="continent-select">Choisissez un continent:</label>
@@ -26,14 +28,15 @@
 
         <label for="country-select">Choisissez un pays:</label>
         <select id="country-select" onchange="updateChartData()"></select>
-
       </div>
     </div>
-    
+
     <div>
       <canvas id="myChart"></canvas>
     </div>
     <script src="js/chart.js"></script>
-    <script>page="exp"</script>
+    <script>
+      page = "exp";
+    </script>
   </body>
 </html>
