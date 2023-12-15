@@ -307,7 +307,7 @@ function updateChartDataTech() {
 function updateCountrySelect(data) {
   let countrySelect = document.getElementById("country-select");
   let countries = [...new Set(data.map((item) => item["Country"]))].sort();
-  countrySelect.innerHTML += `<option value="">-- Sélectionnez un pays --</option>`;
+  countrySelect.innerHTML = `<option value="">-- Sélectionnez un pays --</option>`;
   countrySelect.innerHTML += countries
     .map((country) => `<option value="${country}"$>${country}</option>`)
     .join("");
