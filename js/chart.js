@@ -316,10 +316,8 @@ function updateCountrySelect(data, defaultCountry = "France") {
     )
     .join("");
 
-  console.log(page);
   if (page == "techno") {
     updateDevtypeSelect(data);
-    print("test");
   } else {
     updateChartData();
   }
@@ -331,6 +329,8 @@ function updateDevtypeSelect(data) {
   devtypeSelect.innerHTML = devtype
     .map((devtype) => `<option value="${devtype}">${devtype}</option>`)
     .join("");
+
+  updateChartDataTech();
 }
 
 function loadChartData(continent, defaultCountry) {
